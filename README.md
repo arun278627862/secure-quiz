@@ -1,30 +1,23 @@
-# Fast Finger Response System
+# Secure Poll
 
-A real-time web-based interactive game system designed for team competitions and audience engagement. This application provides both a "Fast Finger" buzzer game for teams and an audience polling system.
+A real-time web-based polling system designed for audience engagement and secure voting. This application provides a comprehensive polling system with real-time results and professional administration tools.
 
 ## Features
 
-### 🏆 Fast Finger Game
-- **Real-time buzzer system** for up to 6 teams
-- **Instant response detection** - first team to buzz wins
-- **Game state management** with start/stop/reset controls
-- **Team management** with customizable team names
-- **Game logging** with timestamps and round tracking
-- **Live display screen** for audience viewing
-
-### 📊 Audience Polling System
+### 📊 Secure Polling System
 - **Real-time voting** with A, B, C, D options
 - **Device-based voting** (one vote per device)
-- **Live results display** with vote counts
-- **Poll management** with start/stop/reset controls
-- **Automatic game switching** (poll stops Fast Finger and vice versa)
+- **Live results display** with vote counts and percentages
+- **Professional poll management** with start/stop/reset controls
+- **Real-time statistics** including vote rates and leading options
+- **Secure voting** with device tracking to prevent duplicate votes
 
-### 🎮 Interactive Interface
-- **Admin panel** for game control and team management
-- **User buzz-in page** for team participation
-- **Display screen** for audience viewing
-- **Responsive design** with modern UI
-- **Real-time updates** using WebSocket connections
+### 🎮 Professional Interface
+- **Poll Admin Panel** for comprehensive poll management
+- **Live Voting Page** for audience participation
+- **Real-time Display Screen** for live results
+- **Modern responsive design** with beautiful UI
+- **Real-time updates** with instant polling
 
 ## Technology Stack
 
@@ -53,10 +46,10 @@ A real-time web-based interactive game system designed for team competitions and
    ```
 
 3. **Access the application**
-   - Admin Panel: `http://localhost:5000/admin`
+   - Poll Admin Panel: `http://localhost:5000/poll-admin`
    - Display Screen: `http://localhost:5000/display`
-   - User Buzz-In: `http://localhost:5000/buzz`
    - Audience Poll: `http://localhost:5000/poll`
+   - Main Admin: `http://localhost:5000/admin`
 
 ## Usage Guide
 

@@ -1,4 +1,4 @@
-// Poll Page JavaScript for Fast Finger Response System
+// Poll Page JavaScript for Secure Poll
 
 class PollPage {
     constructor() {
@@ -21,7 +21,7 @@ class PollPage {
     init() {
         this.bindEvents();
         this.loadInitialData();
-        this.setupSocketListeners();
+        this.startRealTimeUpdates();
     }
 
     bindEvents() {
@@ -43,64 +43,16 @@ class PollPage {
         }
     }
 
-    setupSocketListeners() {
-        socket.on('state_update', (data) => {
-            this.updatePollState(data.poll);
-        });
-
-        socket.on('poll_started', (pollState) => {
-            this.updatePollState(pollState);
-            this.hasVoted = false;
-            this.selectedOption = null;
-            this.winnerShown = false;
-            this.resetPollInterface();
-            this.showPollOptions(pollState.options || {});
-            utils.showNotification('🎉 New poll started! Cast your vote now!', 'success');
-        });
-
-        socket.on('poll_stopped', (data) => {
-            this.pollState.active = false;
-            this.updatePollInterface();
-            
-            // Show winner if available
-            if (data && data.winner) {
-                this.showWinnerAnnouncement(data.winner, data.winner_percentage, data.options);
+    startRealTimeUpdates() {
+        // Poll for updates every 500ms for real-time feel
+        setInterval(async () => {
+            try {
+                const pollState = await utils.apiRequest('/api/poll');
+                this.updatePollState(pollState);
+            } catch (error) {
+                console.error('Failed to fetch poll updates:', error);
             }
-            
-            utils.showNotification('🏁 Poll has ended!', 'info');
-        });
-
-        socket.on('poll_reset', () => {
-            this.pollState = {
-                active: false,
-                question: '',
-                type: 'multiple_choice',
-                options: {},
-                votes: {},
-                winner: null,
-                winner_percentage: 0,
-                total_votes: 0
-            };
-            this.hasVoted = false;
-            this.selectedOption = null;
-            this.winnerShown = false;
-            this.updatePollState(this.pollState);
-            this.hideWinnerAnnouncement();
-        });
-
-        socket.on('poll_vote_update', (data) => {
-            this.pollState.votes = data.votes;
-            this.pollState.winner = data.winner;
-            this.pollState.winner_percentage = data.winner_percentage;
-            this.pollState.total_votes = data.total_votes;
-            
-            this.updatePollResults(data.votes, data.total_votes);
-            
-            // Update winner display in real-time
-            if (data.winner && !this.winnerShown) {
-                this.updateWinnerDisplay(data.winner, data.winner_percentage, data.options);
-            }
-        });
+        }, 500);
     }
 
     updatePollState(pollState) {

@@ -3,89 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Finger Response - Admin Panel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style-arun.css') }}">
+    <title>Secure Poll - Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-minimal.css') }}">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎮 Fast Finger Response System</h1>
+            <h1>📊 Secure Poll</h1>
             <h2>Admin Panel</h2>
         </header>
 
         <nav class="nav-tabs">
-            <button class="nav-tab active" data-tab="game">Game Control</button>
-            <button class="nav-tab" data-tab="teams">Team Management</button>
-            <button class="nav-tab" data-tab="poll">Poll Control</button>
-            <button class="nav-tab" data-tab="logs">Game Logs</button>
+            <button class="nav-tab active" data-tab="poll">Poll Control</button>
+            <button class="nav-tab" data-tab="logs">Poll Logs</button>
             <button class="nav-tab" data-tab="links">Quick Links</button>
         </nav>
 
-        <!-- Game Control Tab -->
-        <div id="game-tab" class="tab-content active">
-            <div class="card">
-                <h3>🏆 Fast Finger Game Control</h3>
-                <div class="game-status">
-                    <span id="game-status">Game Inactive</span>
-                    <span id="round-number">Round: 1</span>
-                </div>
-                
-                <div class="current-winner" id="current-winner" style="display: none;">
-                    <h4>🎯 Winner:</h4>
-                    <span id="winner-team"></span>
-                    <small id="winner-time"></small>
-                </div>
-
-                <div class="control-buttons">
-                    <button id="start-game" class="btn btn-success">▶️ Start Game</button>
-                    <button id="stop-game" class="btn btn-danger">⏹️ Stop Game</button>
-                    <button id="reset-game" class="btn btn-warning">🔄 Reset Round</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Team Management Tab -->
-        <div id="teams-tab" class="tab-content">
-            <div class="card">
-                <h3>👥 Team Management</h3>
-                <p>Configure team names (exactly 6 teams required):</p>
-                
-                <div class="team-inputs">
-                    <div class="team-input-group">
-                        <label for="team1">Team 1:</label>
-                        <input type="text" id="team1" value="Team 1" maxlength="20">
-                    </div>
-                    <div class="team-input-group">
-                        <label for="team2">Team 2:</label>
-                        <input type="text" id="team2" value="Team 2" maxlength="20">
-                    </div>
-                    <div class="team-input-group">
-                        <label for="team3">Team 3:</label>
-                        <input type="text" id="team3" value="Team 3" maxlength="20">
-                    </div>
-                    <div class="team-input-group">
-                        <label for="team4">Team 4:</label>
-                        <input type="text" id="team4" value="Team 4" maxlength="20">
-                    </div>
-                    <div class="team-input-group">
-                        <label for="team5">Team 5:</label>
-                        <input type="text" id="team5" value="Team 5" maxlength="20">
-                    </div>
-                    <div class="team-input-group">
-                        <label for="team6">Team 6:</label>
-                        <input type="text" id="team6" value="Team 6" maxlength="20">
-                    </div>
-                </div>
-                
-                <button id="save-teams" class="btn btn-primary">💾 Save Teams</button>
-            </div>
-        </div>
-
         <!-- Poll Control Tab -->
-        <div id="poll-tab" class="tab-content">
+        <div id="poll-tab" class="tab-content active">
             <div class="card">
                 <h3>📊 Audience Poll Control</h3>
                 <div class="poll-status">
@@ -140,10 +77,10 @@
             </div>
         </div>
 
-        <!-- Game Logs Tab -->
+        <!-- Poll Logs Tab -->
         <div id="logs-tab" class="tab-content">
             <div class="card">
-                <h3>📝 Game Logs</h3>
+                <h3>📝 Poll Logs</h3>
                 <div class="logs-container" id="logs-container">
                     <p>Loading logs...</p>
                 </div>
@@ -158,11 +95,7 @@
                 <div class="links-grid">
                     <a href="/display" target="_blank" class="link-card">
                         <h4>📺 Display Screen</h4>
-                        <p>For audience viewing</p>
-                    </a>
-                    <a href="/buzz" target="_blank" class="link-card">
-                        <h4>🎯 Team Buzz-In</h4>
-                        <p>For team participation</p>
+                        <p>For audience viewing poll results</p>
                     </a>
                     <a href="/poll" target="_blank" class="link-card">
                         <h4>🗳️ Audience Poll</h4>
@@ -178,10 +111,6 @@
                     <h4>📱 QR Codes for Mobile Access</h4>
                     <p>Generate QR codes for easy mobile access:</p>
                     <div class="qr-grid">
-                        <div class="qr-item">
-                            <div class="qr-placeholder">QR Code</div>
-                            <span>Team Buzz-In</span>
-                        </div>
                         <div class="qr-item">
                             <div class="qr-placeholder">QR Code</div>
                             <span>Audience Poll</span>

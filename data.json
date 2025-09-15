@@ -1,134 +1,232 @@
 {
-  "game_state": {
-    "active": false,
-    "current_team": "team1",
-    "round_number": 2,
-    "timestamp": "2025-09-14T22:56:37.218250"
-  },
-  "teams": {
-    "team1": "Team 1",
-    "team2": "Team 2",
-    "team3": "Team 3",
-    "team4": "Team 4",
-    "team5": "Team 5",
-    "team6": "Team 6"
-  },
-  "logs": [
-    {
-      "timestamp": "2025-09-14T22:31:00.933477",
-      "type": "game_started",
-      "team": null,
-      "details": "Round 1 started",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:31:14.036782",
-      "type": "team_buzzed",
-      "team": "team3",
-      "details": "Team 3 buzzed in",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:33:53.573982",
-      "type": "game_stopped",
-      "team": null,
-      "details": "Game stopped by admin",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:34:53.279335",
-      "type": "poll_started",
-      "team": null,
-      "details": "Poll started: asd",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:35:14.305202",
-      "type": "poll_stopped",
-      "team": null,
-      "details": "Poll stopped by admin",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:35:25.103358",
-      "type": "poll_started",
-      "team": null,
-      "details": "Poll started: 12345",
-      "round": 1
-    },
-    {
-      "timestamp": "2025-09-14T22:35:39.879471",
-      "type": "game_reset",
-      "team": null,
-      "details": "Game reset, new round: 2",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T22:55:52.570590",
-      "type": "poll_started",
-      "team": null,
-      "details": "Poll started: What is your favorite color? (Type: multiple_choice)",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T22:56:18.363737",
-      "type": "poll_vote",
-      "team": null,
-      "details": "Vote cast for option B",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T22:56:27.599598",
-      "type": "game_started",
-      "team": null,
-      "details": "Round 2 started",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T22:56:37.232443",
-      "type": "team_buzzed",
-      "team": "team1",
-      "details": "Team 1 buzzed in",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T23:00:29.261315",
-      "type": "game_stopped",
-      "team": null,
-      "details": "Game stopped by admin",
-      "round": 2
-    },
-    {
-      "timestamp": "2025-09-14T23:00:29.821108",
-      "type": "game_stopped",
-      "team": null,
-      "details": "Game stopped by admin",
-      "round": 2
-    }
-  ],
   "poll": {
     "active": false,
-    "question": "What is your favorite color?",
+    "question": "",
     "type": "multiple_choice",
     "options": {
-      "A": "Red",
-      "B": "Blue",
-      "C": "Green",
-      "D": "Yellow"
+      "A": "Option A",
+      "B": "Option B",
+      "C": "Option C",
+      "D": "Option D"
     },
     "votes": {
       "A": 0,
-      "B": 1,
+      "B": 0,
       "C": 0,
       "D": 0
     },
-    "voted_devices": [
-      "127.0.0.1"
-    ],
-    "winner": "B",
-    "winner_percentage": 100.0,
-    "total_votes": 1,
-    "started_at": "2025-09-14T22:55:52.551157",
+    "voted_devices": [],
+    "winner": null,
+    "winner_percentage": 0,
+    "total_votes": 0,
+    "started_at": null,
     "ended_at": null
-  }
+  },
+  "logs": [
+    {
+      "timestamp": "2025-09-16T00:38:20.532991",
+      "type": "poll_started",
+      "details": "Poll started: a (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:38:26.888567",
+      "type": "poll_vote",
+      "details": "Vote cast for option B"
+    },
+    {
+      "timestamp": "2025-09-16T00:40:09.931494",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:40:11.435005",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:18.615302",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:19.790823",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:20.529643",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:20.737828",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:20.947341",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:42:21.607314",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:44:04.841354",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:44:16.124465",
+      "type": "poll_vote",
+      "details": "Vote cast for option C"
+    },
+    {
+      "timestamp": "2025-09-16T00:47:15.261133",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:47:22.549390",
+      "type": "poll_vote",
+      "details": "Vote cast for option B"
+    },
+    {
+      "timestamp": "2025-09-16T00:50:45.645554",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:50:48.404907",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:50:51.634940",
+      "type": "poll_vote",
+      "details": "Vote cast for option B"
+    },
+    {
+      "timestamp": "2025-09-16T00:51:19.111434",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:51:21.340927",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:51:36.568672",
+      "type": "poll_vote",
+      "details": "Vote cast for option D"
+    },
+    {
+      "timestamp": "2025-09-16T00:51:58.772215",
+      "type": "poll_vote",
+      "details": "Vote cast for option B"
+    },
+    {
+      "timestamp": "2025-09-16T00:52:09.239556",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:55:08.121902",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:55:33.829687",
+      "type": "poll_vote",
+      "details": "Vote cast for option C"
+    },
+    {
+      "timestamp": "2025-09-16T00:55:38.532842",
+      "type": "poll_vote",
+      "details": "Vote cast for option A"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:10.203342",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:12.630047",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:14.120543",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:21.362837",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:27.788523",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:31.155420",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:32.660447",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:35.719611",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:37.046611",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:38.413760",
+      "type": "poll_vote",
+      "details": "Vote cast for option B"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:40.932003",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:58:54.785331",
+      "type": "poll_vote",
+      "details": "Vote cast for option A"
+    },
+    {
+      "timestamp": "2025-09-16T00:59:05.402375",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    },
+    {
+      "timestamp": "2025-09-16T00:59:06.839922",
+      "type": "poll_started",
+      "details": "Poll started:  (Type: multiple_choice)"
+    },
+    {
+      "timestamp": "2025-09-16T00:59:11.682840",
+      "type": "poll_vote",
+      "details": "Vote cast for option D"
+    },
+    {
+      "timestamp": "2025-09-16T01:04:14.879360",
+      "type": "poll_reset",
+      "details": "Poll data reset"
+    }
+  ]
 }

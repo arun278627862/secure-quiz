@@ -16,21 +16,6 @@ DATA_FILE = 'data.json'
 
 # Initialize data structure
 DEFAULT_DATA = {
-    'game_state': {
-        'active': False,
-        'current_team': None,
-        'round_number': 1,
-        'timestamp': None
-    },
-    'teams': {
-        'team1': 'Team 1',
-        'team2': 'Team 2',
-        'team3': 'Team 3',
-        'team4': 'Team 4',
-        'team5': 'Team 5',
-        'team6': 'Team 6'
-    },
-    'logs': [],
     'poll': {
         'active': False,
         'question': '',
@@ -72,16 +57,16 @@ def save_data(data):
     except Exception as e:
         print(f"Error saving data: {e}")
 
-def log_event(event_type, details, team=None):
-    """Log game events"""
+def log_event(event_type, details):
+    """Log poll events"""
     data = load_data()
     log_entry = {
         'timestamp': datetime.now().isoformat(),
         'type': event_type,
-        'team': team,
-        'details': details,
-        'round': data['game_state']['round_number']
+        'details': details
     }
+    if 'logs' not in data:
+        data['logs'] = []
     data['logs'].append(log_entry)
     save_data(data)
     
@@ -98,22 +83,17 @@ def get_client_ip():
 # Routes
 @app.route('/')
 def index():
-    """Redirect to admin panel"""
-    return redirect(url_for('admin'))
+    """Redirect to poll admin"""
+    return redirect(url_for('poll_admin'))
 
 @app.route('/admin')
 def admin():
-    """Admin panel for game control"""
+    """Admin panel for poll control"""
     return render_template('admin.html')
-
-@app.route('/buzz')
-def buzz():
-    """Team buzz-in page"""
-    return render_template('buzz.html')
 
 @app.route('/display')
 def display():
-    """Display screen for audience"""
+    """Display screen for poll results"""
     return render_template('display.html')
 
 @app.route('/poll')
@@ -127,148 +107,19 @@ def poll_admin():
     return render_template('poll-admin.html')
 
 # API Routes
-@app.route('/api/teams', methods=['GET'])
-def get_teams():
-    """Get all teams"""
-    data = load_data()
-    return jsonify(data['teams'])
-
-@app.route('/api/teams', methods=['POST'])
-def update_teams():
-    """Update team names"""
-    try:
-        new_teams = request.json
-        if not new_teams or len(new_teams) != 6:
-            return jsonify({'error': 'Must provide exactly 6 teams'}), 400
-        
-        data = load_data()
-        data['teams'] = new_teams
-        save_data(data)
-        
-        # Emit team update to all clients
-        socketio.emit('teams_updated', new_teams, namespace='/')
-        
-        log_event('teams_updated', 'Team names updated')
-        
-        return jsonify({'success': True})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/start', methods=['POST'])
-def start_game():
-    """Start Fast Finger game"""
-    try:
-        data = load_data()
-        
-        # Stop any active poll
-        if data['poll']['active']:
-            data['poll']['active'] = False
-            socketio.emit('poll_stopped', namespace='/')
-        
-        data['game_state']['active'] = True
-        data['game_state']['current_team'] = None
-        data['game_state']['timestamp'] = datetime.now().isoformat()
-        save_data(data)
-        
-        # Emit game state to all clients
-        socketio.emit('game_started', data['game_state'], namespace='/')
-        
-        log_event('game_started', f'Round {data["game_state"]["round_number"]} started')
-        
-        return jsonify({'success': True})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/stop', methods=['POST'])
-def stop_game():
-    """Stop Fast Finger game"""
-    try:
-        data = load_data()
-        data['game_state']['active'] = False
-        save_data(data)
-        
-        # Emit game state to all clients
-        socketio.emit('game_stopped', data['game_state'], namespace='/')
-        
-        log_event('game_stopped', 'Game stopped by admin')
-        
-        return jsonify({'success': True})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/reset', methods=['POST'])
-def reset_game():
-    """Reset game state"""
-    try:
-        data = load_data()
-        data['game_state']['active'] = False
-        data['game_state']['current_team'] = None
-        data['game_state']['round_number'] += 1
-        save_data(data)
-        
-        # Emit reset to all clients
-        socketio.emit('game_reset', data['game_state'], namespace='/')
-        
-        log_event('game_reset', f'Game reset, new round: {data["game_state"]["round_number"]}')
-        
-        return jsonify({'success': True})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/buzz', methods=['POST'])
-def buzz_in():
-    """Handle team buzz-in"""
-    try:
-        team_id = request.json.get('team')
-        if not team_id:
-            return jsonify({'error': 'Team ID required'}), 400
-        
-        data = load_data()
-        
-        # Check if game is active
-        if not data['game_state']['active']:
-            return jsonify({'error': 'Game is not active'}), 400
-        
-        # Check if someone already buzzed
-        if data['game_state']['current_team']:
-            return jsonify({'error': 'Someone already buzzed'}), 400
-        
-        # Record the buzz
-        data['game_state']['current_team'] = team_id
-        data['game_state']['timestamp'] = datetime.now().isoformat()
-        save_data(data)
-        
-        team_name = data['teams'].get(team_id, team_id)
-        
-        # Emit buzz event to all clients
-        socketio.emit('team_buzzed', {
-            'team': team_id,
-            'team_name': team_name,
-            'timestamp': data['game_state']['timestamp']
-        }, namespace='/')
-        
-        log_event('team_buzzed', f'{team_name} buzzed in', team_id)
-        
-        return jsonify({'success': True, 'team': team_name})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 @app.route('/api/logs', methods=['GET'])
 def get_logs():
-    """Get game logs"""
+    """Get poll logs"""
     data = load_data()
+    logs = data.get('logs', [])
     # Return last 50 logs
-    return jsonify(data['logs'][-50:])
+    return jsonify(logs[-50:])
 
-@app.route('/api/game-state', methods=['GET'])
-def get_game_state():
-    """Get current game state"""
+@app.route('/api/poll-state', methods=['GET'])
+def get_poll_state():
+    """Get current poll state"""
     data = load_data()
-    return jsonify({
-        'game_state': data['game_state'],
-        'teams': data['teams'],
-        'poll': data['poll']
-    })
+    return jsonify(data['poll'])
 
 # Poll API Routes
 @app.route('/api/poll', methods=['GET'])
@@ -286,15 +137,7 @@ def create_poll():
         poll_type = poll_data.get('type', 'multiple_choice')
         custom_options = poll_data.get('options', {})
         
-        if not question:
-            return jsonify({'error': 'Question is required'}), 400
-        
         data = load_data()
-        
-        # Stop any active game
-        if data['game_state']['active']:
-            data['game_state']['active'] = False
-            socketio.emit('game_stopped', data['game_state'], namespace='/')
         
         # Prepare poll options based on type
         if poll_type == 'yes_no':
@@ -468,8 +311,6 @@ def handle_connect():
     # Send current state to newly connected client
     data = load_data()
     emit('state_update', {
-        'game_state': data['game_state'],
-        'teams': data['teams'],
         'poll': data['poll']
     })
 
@@ -503,11 +344,11 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug_mode = os.environ.get('FLASK_ENV') == 'development'
     
-    print("Starting Fast Finger Response System...")
+    print("Starting Secure Poll...")
     print("Access the application at:")
     print(f"  Admin Panel: http://localhost:{port}/admin")
     print(f"  Display Screen: http://localhost:{port}/display")
-    print(f"  Team Buzz-In: http://localhost:{port}/buzz")
     print(f"  Audience Poll: http://localhost:{port}/poll")
+    print(f"  Poll Admin: http://localhost:{port}/poll-admin")
     
     socketio.run(app, host='0.0.0.0', port=port, debug=debug_mode)

@@ -1,19 +1,44 @@
-// Common JavaScript functions for Fast Finger Response System
+// Common JavaScript functions for Secure Poll
 
-// Initialize Socket.IO connection - wait for io to be available
+// Initialize Socket.IO connection
 let socket;
-if (typeof io !== 'undefined') {
-    socket = io();
-} else {
-    // Fallback if io is not loaded yet
-    console.warn('Socket.IO not loaded yet, will retry...');
-    window.addEventListener('load', () => {
-        if (typeof io !== 'undefined') {
-            socket = io();
-            window.socket = socket; // Make globally available
-        }
-    });
+
+function initializeSocket() {
+    if (typeof io !== 'undefined') {
+        socket = io({
+            transports: ['polling', 'websocket'],
+            upgrade: true,
+            rememberUpgrade: false,
+            timeout: 20000,
+            forceNew: true
+        });
+        
+        socket.on('connect', () => {
+            console.log('Socket.IO connected successfully');
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('Socket.IO disconnected');
+        });
+        
+        socket.on('connect_error', (error) => {
+            console.error('Socket.IO connection error:', error);
+            // Retry connection after 2 seconds
+            setTimeout(() => {
+                console.log('Retrying Socket.IO connection...');
+                socket.connect();
+            }, 2000);
+        });
+        
+        window.socket = socket; // Make globally available
+    } else {
+        console.warn('Socket.IO not loaded yet, retrying in 100ms...');
+        setTimeout(initializeSocket, 100);
+    }
 }
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeSocket);
 
 // Common utility functions
 const utils = {

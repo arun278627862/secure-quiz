@@ -1,4 +1,4 @@
-// Poll Admin JavaScript for Fast Finger Response System
+// Poll Admin JavaScript for Secure Poll
 
 class PollAdmin {
     constructor() {
@@ -20,7 +20,7 @@ class PollAdmin {
     init() {
         this.bindEvents();
         this.loadInitialData();
-        this.setupSocketListeners();
+        this.startRealTimeUpdates();
         this.startVoteRateTracking();
     }
 
@@ -40,43 +40,16 @@ class PollAdmin {
         }
     }
 
-    setupSocketListeners() {
-        socket.on('state_update', (data) => {
-            this.updatePollState(data.poll);
-        });
-
-        socket.on('poll_started', (pollState) => {
-            this.updatePollState(pollState);
-            this.pollStartTime = new Date();
-            utils.showNotification('Poll started successfully!', 'success');
-        });
-
-        socket.on('poll_stopped', () => {
-            this.pollState.active = false;
-            this.updatePollControls();
-            utils.showNotification('Poll stopped!', 'info');
-        });
-
-        socket.on('poll_reset', () => {
-            this.pollState = {
-                active: false,
-                question: '',
-                votes: { A: 0, B: 0, C: 0, D: 0 }
-            };
-            this.pollStartTime = null;
-            this.updatePollState(this.pollState);
-            utils.showNotification('Poll reset!', 'info');
-        });
-
-        socket.on('poll_vote_update', (data) => {
-            this.pollState.votes = data.votes;
-            this.pollState.winner = data.winner;
-            this.pollState.winner_percentage = data.winner_percentage;
-            this.pollState.total_votes = data.total_votes;
-            
-            this.updatePollResults(data.votes, data.total_votes);
-            this.updateStatistics(data.votes, data.total_votes);
-        });
+    startRealTimeUpdates() {
+        // Poll for updates every 500ms for real-time feel
+        setInterval(async () => {
+            try {
+                const pollState = await utils.apiRequest('/api/poll');
+                this.updatePollState(pollState);
+            } catch (error) {
+                console.error('Failed to fetch poll updates:', error);
+            }
+        }, 500);
     }
 
     updatePollState(pollState) {
@@ -87,8 +60,14 @@ class PollAdmin {
     }
 
     updatePollControls() {
-        const statusText = this.pollState.active ? 'Poll Active' : 'No Active Poll';
-        utils.updateText('admin-poll-status', statusText);
+        const statusElement = document.getElementById('admin-poll-status');
+        if (this.pollState.active) {
+            statusElement.textContent = 'Poll Active';
+            statusElement.className = 'poll-status-badge poll-status-active';
+        } else {
+            statusElement.textContent = 'No Active Poll';
+            statusElement.className = 'poll-status-badge poll-status-inactive';
+        }
 
         document.getElementById('admin-start-poll').disabled = this.pollState.active;
         document.getElementById('admin-stop-poll').disabled = !this.pollState.active;
@@ -108,7 +87,12 @@ class PollAdmin {
             const optionLower = option.toLowerCase();
             utils.updateText(`admin-vote-${optionLower}-count`, count);
             utils.updateText(`admin-vote-${optionLower}-percent`, `${percentage.toFixed(1)}%`);
-            utils.updateProgressBar(`admin-vote-${optionLower}-bar`, percentage);
+            
+            // Update progress bar width
+            const progressBar = document.getElementById(`admin-vote-${optionLower}-bar`);
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
+            }
         });
 
         utils.updateText('admin-total-votes', total);
@@ -152,17 +136,14 @@ class PollAdmin {
     }
 
     async startPoll() {
-        const questionInput = document.getElementById('admin-poll-question');
-        const question = questionInput ? questionInput.value.trim() : '';
-        
-        if (!question) {
-            utils.showNotification('Please enter a poll question', 'error');
-            return;
-        }
-
         try {
-            await utils.apiRequest('/api/poll', 'POST', { question });
-            if (questionInput) questionInput.value = '';
+            await utils.apiRequest('/api/poll', 'POST', {});
+            
+            // Immediately update the UI to show active state
+            this.pollState.active = true;
+            this.pollStartTime = new Date();
+            this.updatePollControls();
+            utils.showNotification('Poll started successfully!', 'success');
         } catch (error) {
             utils.showNotification('Failed to start poll: ' + error.message, 'error');
         }
@@ -171,6 +152,11 @@ class PollAdmin {
     async stopPoll() {
         try {
             await utils.apiRequest('/api/poll/stop', 'POST');
+            
+            // Immediately update the UI to show stopped state
+            this.pollState.active = false;
+            this.updatePollControls();
+            utils.showNotification('Poll stopped successfully!', 'info');
         } catch (error) {
             utils.showNotification('Failed to stop poll: ' + error.message, 'error');
         }
@@ -179,6 +165,29 @@ class PollAdmin {
     async resetPoll() {
         try {
             await utils.apiRequest('/api/poll/reset', 'POST');
+            
+            // Immediately update the UI to show reset state
+            this.pollState = {
+                active: false,
+                question: '',
+                type: 'multiple_choice',
+                options: {
+                    'A': 'Option A',
+                    'B': 'Option B',
+                    'C': 'Option C',
+                    'D': 'Option D'
+                },
+                votes: {'A': 0, 'B': 0, 'C': 0, 'D': 0},
+                voted_devices: [],
+                winner: null,
+                winner_percentage: 0,
+                total_votes: 0,
+                started_at: null,
+                ended_at: null
+            };
+            this.pollStartTime = null;
+            this.updatePollState(this.pollState);
+            utils.showNotification('Poll reset successfully!', 'success');
         } catch (error) {
             utils.showNotification('Failed to reset poll: ' + error.message, 'error');
         }
