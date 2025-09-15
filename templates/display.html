@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Finger Response - Display Screen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-arun.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="display-page">
+    <div class="container">
+        <header class="display-header">
+            <h1>🎮 Fast Finger Response System</h1>
+            <div class="display-status">
+                <span id="display-status">System Ready</span>
+                <span id="display-round">Round: 1</span>
+            </div>
+        </header>
+
+        <!-- Game Display -->
+        <div class="display-section" id="game-display">
+            <div class="game-state-display">
+                <div class="state-indicator" id="state-indicator">
+                    <span class="status-text" id="status-text">Waiting for Game</span>
+                    <span class="status-icon" id="status-icon">⏸️</span>
+                </div>
+            </div>
+
+            <div class="winner-display" id="winner-display" style="display: none;">
+                <div class="winner-card">
+                    <h2>🏆 WINNER!</h2>
+                    <div class="winner-team" id="display-winner-team"></div>
+                    <div class="winner-time" id="display-winner-time"></div>
+                </div>
+            </div>
+
+            <div class="teams-display" id="teams-display">
+                <div class="team-card" data-team="team1">
+                    <div class="team-name" id="display-team1">Team 1</div>
+                    <div class="team-status">Ready</div>
+                </div>
+                <div class="team-card" data-team="team2">
+                    <div class="team-name" id="display-team2">Team 2</div>
+                    <div class="team-status">Ready</div>
+                </div>
+                <div class="team-card" data-team="team3">
+                    <div class="team-name" id="display-team3">Team 3</div>
+                    <div class="team-status">Ready</div>
+                </div>
+                <div class="team-card" data-team="team4">
+                    <div class="team-name" id="display-team4">Team 4</div>
+                    <div class="team-status">Ready</div>
+                </div>
+                <div class="team-card" data-team="team5">
+                    <div class="team-name" id="display-team5">Team 5</div>
+                    <div class="team-status">Ready</div>
+                </div>
+                <div class="team-card" data-team="team6">
+                    <div class="team-name" id="display-team6">Team 6</div>
+                    <div class="team-status">Ready</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Poll Display -->
+        <div class="display-section" id="poll-display" style="display: none;">
+            <div class="poll-header">
+                <h2>📊 Audience Poll</h2>
+                <div class="poll-question" id="display-poll-question"></div>
+            </div>
+
+            <div class="poll-results-display">
+                <div class="poll-option">
+                    <div class="option-label">A</div>
+                    <div class="option-bar">
+                        <div class="option-fill" id="display-option-a"></div>
+                        <span class="option-count" id="display-count-a">0</span>
+                    </div>
+                </div>
+                <div class="poll-option">
+                    <div class="option-label">B</div>
+                    <div class="option-bar">
+                        <div class="option-fill" id="display-option-b"></div>
+                        <span class="option-count" id="display-count-b">0</span>
+                    </div>
+                </div>
+                <div class="poll-option">
+                    <div class="option-label">C</div>
+                    <div class="option-bar">
+                        <div class="option-fill" id="display-option-c"></div>
+                        <span class="option-count" id="display-count-c">0</span>
+                    </div>
+                </div>
+                <div class="poll-option">
+                    <div class="option-label">D</div>
+                    <div class="option-bar">
+                        <div class="option-fill" id="display-option-d"></div>
+                        <span class="option-count" id="display-count-d">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="poll-total">
+                Total Votes: <span id="display-total-votes">0</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="display-footer">
+            <span>Secure Meters Ltd</span>
+            <span id="current-time"></span>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='display.js') }}"></script>
+</body>
+</html>

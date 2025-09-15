@@ -1,0 +1,6 @@
+<!-- This is a placeholder for favicon. In a real application, this would be a binary .ico file -->
+<!-- For now, we'll create a simple SVG icon that browsers can use -->
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#4299e1"/>
+  <text x="16" y="20" text-anchor="middle" fill="white" font-family="Arial" font-size="18" font-weight="bold">F</text>
+</svg>

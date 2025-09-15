@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Finger Response - Live Polling</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-arun.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="poll-page">
+    <div class="container">
+        <header>
+            <h1>🗳️ Live Polling System</h1>
+            <h2>Your Voice Matters - Vote Now!</h2>
+        </header>
+
+        <!-- Poll Status Banner -->
+        <div class="poll-status-banner" id="poll-status-banner">
+            <span id="poll-status-text">Waiting for poll to start...</span>
+        </div>
+
+        <!-- Winner Announcement -->
+        <div class="winner-announcement" id="winner-announcement" style="display: none;">
+            <h3>🏆 Poll Winner!</h3>
+            <div class="winner-option" id="winner-option-display">A</div>
+            <div class="winner-percentage" id="winner-percentage-display">0%</div>
+            <p id="winner-description">Congratulations to the winning option!</p>
+        </div>
+
+        <!-- Poll Container -->
+        <div class="poll-container" id="poll-container" style="display: none;">
+            <div class="poll-question-display">
+                <h3 id="poll-question-text">Poll Question Will Appear Here</h3>
+            </div>
+
+            <div class="poll-options" id="poll-options">
+                <button class="poll-option-btn" data-option="A" id="option-a">
+                    <span class="option-letter">A</span>
+                    <span class="option-text" id="option-a-text">Option A</span>
+                </button>
+                <button class="poll-option-btn" data-option="B" id="option-b">
+                    <span class="option-letter">B</span>
+                    <span class="option-text" id="option-b-text">Option B</span>
+                </button>
+                <button class="poll-option-btn" data-option="C" id="option-c">
+                    <span class="option-letter">C</span>
+                    <span class="option-text" id="option-c-text">Option C</span>
+                </button>
+                <button class="poll-option-btn" data-option="D" id="option-d">
+                    <span class="option-letter">D</span>
+                    <span class="option-text" id="option-d-text">Option D</span>
+                </button>
+                <button class="poll-option-btn" data-option="E" id="option-e" style="display: none;">
+                    <span class="option-letter">E</span>
+                    <span class="option-text" id="option-e-text">Option E</span>
+                </button>
+            </div>
+
+            <!-- Vote Confirmation -->
+            <div class="vote-confirmation" id="vote-confirmation" style="display: none;">
+                <h3>✅ Thank you for voting!</h3>
+                <p>Your vote has been recorded successfully.</p>
+                <p id="vote-selected">You voted for option: <strong id="selected-option">A</strong></p>
+            </div>
+        </div>
+
+        <!-- Live Results -->
+        <div class="poll-results" id="poll-results" style="display: none;">
+            <h3>📈 Live Results</h3>
+            <div class="results-grid" id="results-grid">
+                <div class="result-item" id="result-item-a">
+                    <span class="result-label">A</span>
+                    <div class="result-bar">
+                        <div class="result-fill" id="result-a"></div>
+                    </div>
+                    <span class="result-count" id="count-a">0</span>
+                </div>
+                <div class="result-item" id="result-item-b">
+                    <span class="result-label">B</span>
+                    <div class="result-bar">
+                        <div class="result-fill" id="result-b"></div>
+                    </div>
+                    <span class="result-count" id="count-b">0</span>
+                </div>
+                <div class="result-item" id="result-item-c">
+                    <span class="result-label">C</span>
+                    <div class="result-bar">
+                        <div class="result-fill" id="result-c"></div>
+                    </div>
+                    <span class="result-count" id="count-c">0</span>
+                </div>
+                <div class="result-item" id="result-item-d">
+                    <span class="result-label">D</span>
+                    <div class="result-bar">
+                        <div class="result-fill" id="result-d"></div>
+                    </div>
+                    <span class="result-count" id="count-d">0</span>
+                </div>
+                <div class="result-item" id="result-item-e" style="display: none;">
+                    <span class="result-label">E</span>
+                    <div class="result-bar">
+                        <div class="result-fill" id="result-e"></div>
+                    </div>
+                    <span class="result-count" id="count-e">0</span>
+                </div>
+            </div>
+            <div class="total-votes">
+                Total Votes: <span id="total-votes-display">0</span>
+            </div>
+        </div>
+
+        <!-- Enhanced Instructions -->
+        <div class="poll-instructions">
+            <h3>📋 How to Participate</h3>
+            <ul>
+                <li>Wait for a poll to be started by the administrator</li>
+                <li>Read the question carefully and select your preferred option</li>
+                <li>Click on any option (A, B, C, D) to cast your vote</li>
+                <li>Use keyboard shortcuts: Press A, B, C, or D keys for quick voting</li>
+                <li>You can only vote once per device for each poll</li>
+                <li>Watch live results update in real-time after voting</li>
+                <li>See the winner announcement when the poll ends</li>
+            </ul>
+        </div>
+
+        <!-- Admin Links -->
+        <div class="admin-links">
+            <a href="/admin" target="_blank">🔧 Admin Panel</a>
+            <a href="/poll-admin" target="_blank">📋 Poll Admin</a>
+            <a href="/display" target="_blank">📺 Display Screen</a>
+            <a href="/buzz" target="_blank">⚡ Buzzer Game</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='poll.js') }}"></script>
+</body>
+</html>

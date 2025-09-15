@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Finger Response - Team Buzz-In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-arun.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="buzz-page">
+    <div class="container">
+        <header>
+            <h1>🎯 Fast Finger Response</h1>
+            <h2>Team Buzz-In</h2>
+        </header>
+
+        <div class="game-status-banner" id="game-status-banner">
+            <span id="game-status-text">Waiting for game to start...</span>
+            <span id="round-info">Round: 1</span>
+        </div>
+
+        <div class="winner-announcement" id="winner-announcement" style="display: none;">
+            <h2>🏆 Winner!</h2>
+            <div id="winner-team-name"></div>
+            <div id="winner-timestamp"></div>
+        </div>
+
+        <div class="teams-grid" id="teams-grid">
+            <button class="team-button" data-team="team1" id="team1-btn">
+                <span class="team-name">Team 1</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+            <button class="team-button" data-team="team2" id="team2-btn">
+                <span class="team-name">Team 2</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+            <button class="team-button" data-team="team3" id="team3-btn">
+                <span class="team-name">Team 3</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+            <button class="team-button" data-team="team4" id="team4-btn">
+                <span class="team-name">Team 4</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+            <button class="team-button" data-team="team5" id="team5-btn">
+                <span class="team-name">Team 5</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+            <button class="team-button" data-team="team6" id="team6-btn">
+                <span class="team-name">Team 6</span>
+                <span class="buzz-status">Ready</span>
+            </button>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instructions</h3>
+            <ul>
+                <li>Wait for the admin to start the game</li>
+                <li>When the game is active, click your team button to buzz in</li>
+                <li>First team to buzz wins the round</li>
+                <li>Wait for the next round to be reset</li>
+            </ul>
+        </div>
+
+        <div class="admin-link">
+            <a href="/admin" target="_blank">🔧 Admin Panel</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='buzz.js') }}"></script>
+</body>
+</html>

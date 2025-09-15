@@ -1,0 +1,134 @@
+{
+  "game_state": {
+    "active": false,
+    "current_team": "team1",
+    "round_number": 2,
+    "timestamp": "2025-09-14T22:56:37.218250"
+  },
+  "teams": {
+    "team1": "Team 1",
+    "team2": "Team 2",
+    "team3": "Team 3",
+    "team4": "Team 4",
+    "team5": "Team 5",
+    "team6": "Team 6"
+  },
+  "logs": [
+    {
+      "timestamp": "2025-09-14T22:31:00.933477",
+      "type": "game_started",
+      "team": null,
+      "details": "Round 1 started",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:31:14.036782",
+      "type": "team_buzzed",
+      "team": "team3",
+      "details": "Team 3 buzzed in",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:33:53.573982",
+      "type": "game_stopped",
+      "team": null,
+      "details": "Game stopped by admin",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:34:53.279335",
+      "type": "poll_started",
+      "team": null,
+      "details": "Poll started: asd",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:35:14.305202",
+      "type": "poll_stopped",
+      "team": null,
+      "details": "Poll stopped by admin",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:35:25.103358",
+      "type": "poll_started",
+      "team": null,
+      "details": "Poll started: 12345",
+      "round": 1
+    },
+    {
+      "timestamp": "2025-09-14T22:35:39.879471",
+      "type": "game_reset",
+      "team": null,
+      "details": "Game reset, new round: 2",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T22:55:52.570590",
+      "type": "poll_started",
+      "team": null,
+      "details": "Poll started: What is your favorite color? (Type: multiple_choice)",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T22:56:18.363737",
+      "type": "poll_vote",
+      "team": null,
+      "details": "Vote cast for option B",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T22:56:27.599598",
+      "type": "game_started",
+      "team": null,
+      "details": "Round 2 started",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T22:56:37.232443",
+      "type": "team_buzzed",
+      "team": "team1",
+      "details": "Team 1 buzzed in",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T23:00:29.261315",
+      "type": "game_stopped",
+      "team": null,
+      "details": "Game stopped by admin",
+      "round": 2
+    },
+    {
+      "timestamp": "2025-09-14T23:00:29.821108",
+      "type": "game_stopped",
+      "team": null,
+      "details": "Game stopped by admin",
+      "round": 2
+    }
+  ],
+  "poll": {
+    "active": false,
+    "question": "What is your favorite color?",
+    "type": "multiple_choice",
+    "options": {
+      "A": "Red",
+      "B": "Blue",
+      "C": "Green",
+      "D": "Yellow"
+    },
+    "votes": {
+      "A": 0,
+      "B": 1,
+      "C": 0,
+      "D": 0
+    },
+    "voted_devices": [
+      "127.0.0.1"
+    ],
+    "winner": "B",
+    "winner_percentage": 100.0,
+    "total_votes": 1,
+    "started_at": "2025-09-14T22:55:52.551157",
+    "ended_at": null
+  }
+}

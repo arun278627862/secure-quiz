@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Finger Response - Poll Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-arun.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Poll Administration</h1>
+            <h2>Manage Audience Polls</h2>
+        </header>
+
+        <div class="poll-admin-grid">
+            <div class="card">
+                <h3>🎛️ Poll Control</h3>
+                <div class="poll-status">
+                    <span id="admin-poll-status">No Active Poll</span>
+                </div>
+                
+                <div class="poll-question-input">
+                    <label for="admin-poll-question">Poll Question:</label>
+                    <input type="text" id="admin-poll-question" placeholder="Enter your poll question..." maxlength="200">
+                </div>
+
+                <div class="control-buttons">
+                    <button id="admin-start-poll" class="btn btn-success">📊 Start Poll</button>
+                    <button id="admin-stop-poll" class="btn btn-danger">⏹️ Stop Poll</button>
+                    <button id="admin-reset-poll" class="btn btn-warning">🔄 Reset Poll</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📈 Live Results</h3>
+                <div class="admin-poll-results" id="admin-poll-results">
+                    <div class="admin-result-bar">
+                        <span class="option-label">A:</span>
+                        <div class="bar">
+                            <div class="fill" id="admin-vote-a-bar"></div>
+                            <span class="count" id="admin-vote-a-count">0</span>
+                        </div>
+                        <span class="percentage" id="admin-vote-a-percent">0%</span>
+                    </div>
+                    <div class="admin-result-bar">
+                        <span class="option-label">B:</span>
+                        <div class="bar">
+                            <div class="fill" id="admin-vote-b-bar"></div>
+                            <span class="count" id="admin-vote-b-count">0</span>
+                        </div>
+                        <span class="percentage" id="admin-vote-b-percent">0%</span>
+                    </div>
+                    <div class="admin-result-bar">
+                        <span class="option-label">C:</span>
+                        <div class="bar">
+                            <div class="fill" id="admin-vote-c-bar"></div>
+                            <span class="count" id="admin-vote-c-count">0</span>
+                        </div>
+                        <span class="percentage" id="admin-vote-c-percent">0%</span>
+                    </div>
+                    <div class="admin-result-bar">
+                        <span class="option-label">D:</span>
+                        <div class="bar">
+                            <div class="fill" id="admin-vote-d-bar"></div>
+                            <span class="count" id="admin-vote-d-count">0</span>
+                        </div>
+                        <span class="percentage" id="admin-vote-d-percent">0%</span>
+                    </div>
+                    <div class="total-votes">
+                        Total Votes: <span id="admin-total-votes">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Poll Statistics</h3>
+            <div class="stats-grid" id="poll-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-total-votes">0</div>
+                    <div class="stat-label">Total Votes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-leading-option">-</div>
+                    <div class="stat-label">Leading Option</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-vote-rate">0</div>
+                    <div class="stat-label">Votes/Min</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-devices">0</div>
+                    <div class="stat-label">Unique Devices</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-links">
+            <a href="/admin" class="btn btn-secondary">🔧 Main Admin</a>
+            <a href="/display" target="_blank" class="btn btn-secondary">📺 Display Screen</a>
+            <a href="/poll" target="_blank" class="btn btn-secondary">🗳️ Poll Page</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='poll-admin.js') }}"></script>
+</body>
+</html>
