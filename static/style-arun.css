@@ -237,17 +237,18 @@
 
 /* Poll Page Specific Styles */
 .poll-page {
-    background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+    background: white;
 }
 
 .poll-status-banner {
-    background: rgba(255, 255, 255, 0.95);
+    background: #f8f9fa;
     padding: 20px;
     border-radius: 15px;
     text-align: center;
     margin-bottom: 30px;
     font-weight: 600;
     color: #4a5568;
+    border: 2px solid #e9ecef;
 }
 
 .poll-container {
@@ -290,18 +291,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .poll-option-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    border-color: #8e44ad;
+    border-color: #007bff;
 }
 
 .poll-option-btn.selected {
-    background: #8e44ad;
+    background: #007bff;
     color: white;
-    border-color: #7d3c98;
+    border-color: #0056b3;
 }
 
 .option-letter {
@@ -316,11 +318,12 @@
 }
 
 .vote-confirmation {
-    background: rgba(255, 255, 255, 0.95);
+    background: #f8f9fa;
     padding: 30px;
     border-radius: 20px;
     text-align: center;
     animation: fadeIn 0.5s ease-in-out;
+    border: 2px solid #e9ecef;
 }
 
 .vote-confirmation h3 {
@@ -330,10 +333,11 @@
 
 /* Poll Results */
 .poll-results {
-    background: rgba(255, 255, 255, 0.95);
+    background: #f8f9fa;
     padding: 25px;
     border-radius: 15px;
     margin-bottom: 30px;
+    border: 2px solid #e9ecef;
 }
 
 .results-grid {
@@ -367,7 +371,7 @@
 
 .result-fill {
     height: 100%;
-    background: linear-gradient(90deg, #8e44ad, #a569bd);
+    background: linear-gradient(90deg, #007bff, #0056b3);
     border-radius: 20px;
     transition: width 0.8s ease;
     width: 0%;

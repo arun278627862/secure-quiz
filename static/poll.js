@@ -117,8 +117,7 @@ class PollPage {
         const statusText = this.pollState.active ? '🟢 Poll Active - Cast Your Vote!' : '🔴 Waiting for poll to start...';
         utils.updateText('poll-status-text', statusText);
 
-        if (this.pollState.active && this.pollState.question) {
-            utils.updateText('poll-question-text', this.pollState.question);
+        if (this.pollState.active) {
             utils.toggleDisplay('poll-container', true);
             
             if (this.hasVoted) {
