@@ -499,11 +499,15 @@ if __name__ == '__main__':
     if not os.path.exists(DATA_FILE):
         save_data(DEFAULT_DATA)
     
+    # Get port from environment variable (for Render) or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    
     print("Starting Fast Finger Response System...")
     print("Access the application at:")
-    print("  Admin Panel: http://localhost:5000/admin")
-    print("  Display Screen: http://localhost:5000/display")
-    print("  Team Buzz-In: http://localhost:5000/buzz")
-    print("  Audience Poll: http://localhost:5000/poll")
+    print(f"  Admin Panel: http://localhost:{port}/admin")
+    print(f"  Display Screen: http://localhost:{port}/display")
+    print(f"  Team Buzz-In: http://localhost:{port}/buzz")
+    print(f"  Audience Poll: http://localhost:{port}/poll")
     
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=port, debug=debug_mode)
